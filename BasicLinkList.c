@@ -12,6 +12,7 @@ typedef struct node
 void addAtBegin(int );
 void addAtLast(int );
 void printList(void );
+void findMiddle(void);
 
 
 Node *head = NULL;
@@ -20,12 +21,12 @@ Node *current  = NULL;
 int main(int argc, char const *argv[])
 {
     printList();
-    for (int i = 0; i<10; i++)
+    for (int i = 1; i<10; i++)
     {
-        addAtBegin(i);
         addAtLast(i);
     }
     printList();
+    findMiddle();
     return 0;
 }
 void printList()
@@ -62,9 +63,37 @@ void addAtLast(int pData)
     link->data = pData;
 
     Node *endNode = head;
-    while (endNode->next != NULL)
+    if (endNode)
     {
-        endNode = endNode->next;
+        while (endNode->next != NULL)
+        {
+            endNode = endNode->next;
+        }
+        endNode->next = link;
     }
-    endNode->next = link;
+    else
+    {
+        head = link;
+    }
+}
+void findMiddle(void)
+{
+    int increment = 0;
+    current = head;
+    if (!current)
+    {
+        printf("Empty list\n");
+        return;
+    }
+    while (current->next != NULL)
+    {
+        current = current->next;
+        increment ++;
+    }
+    current = head;
+    for (size_t i = 0; i < increment/2; i++)
+    {
+        current = current->next;
+    }
+    printf("Middle node data: %d\n",current->data);
 }
